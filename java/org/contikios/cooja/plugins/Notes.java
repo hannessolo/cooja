@@ -119,10 +119,14 @@ public class Notes extends VisPlugin {
     }
     BasicInternalFrameUI ui = (BasicInternalFrameUI) Notes.this.getUI();
 
-    if (visible) {
-      ui.getNorthPane().setPreferredSize(null);
-    } else {
-      ui.getNorthPane().setPreferredSize(new Dimension(0,0));
+    try {
+      if (visible) {
+        ui.getNorthPane().setPreferredSize(null);
+      } else {
+        ui.getNorthPane().setPreferredSize(new Dimension(0,0));
+      }
+    } catch (NullPointerException e) {
+      // ui.getNorthPane is null on some systems if nimbus UI is not found in Cooja.setLookAndFeel
     }
 
     Notes.this.revalidate();
